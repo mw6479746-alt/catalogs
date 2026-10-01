@@ -203,7 +203,7 @@ const CATALOG={
     {
      "id": "p31",
      "name": "دياموند",
-     "price": 250,
+     "price": 200,
      "img": 1
     },
     {
