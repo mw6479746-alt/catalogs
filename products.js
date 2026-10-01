@@ -1,5 +1,5 @@
 const CATALOG={
- "brand": "PROTEIN COSMETICS",
+ "brand": "PROTEIN and COSMETICS",
  "whatsapp": "201021602774",
  "sections": [
   {
