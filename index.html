@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PROTEIN COSMETICS</title><meta name="theme-color" content="#111111">
+<link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--bg:#f5f5f2;--ink:#111;--mut:#6b6b66;--gold:#f5c400;--line:#e5e5df}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);padding-bottom:100px}
+header{background:var(--ink);color:#fff;padding:calc(12px + env(safe-area-inset-top)) 14px 10px;position:sticky;top:0;z-index:10}
+.br{display:flex;justify-content:space-between;align-items:baseline}.br b{color:var(--gold);letter-spacing:1px;font-size:18px}.br span{font-size:12px;color:#bbb}
+#q{width:100%;margin:10px 0 8px;padding:11px 14px;border:0;border-radius:12px;font-size:16px}
+#ch{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.chip{flex:none;padding:7px 14px;border-radius:20px;background:#2a2a2a;color:#ddd;font-size:14px;border:0}.chip.on{background:var(--gold);color:var(--ink);font-weight:700}
+h2{font-size:17px;margin:18px 14px 10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 14px}
+.card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column}
+.im{aspect-ratio:1;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#d6d6d0;font-size:38px;font-weight:700;background:#fafaf8}.im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.nm{padding:8px 10px 0;font-size:15px;font-weight:600;line-height:1.35;flex:1}.pr{padding:2px 10px 8px;font-size:14px;color:var(--mut)}.pr b{font-size:17px;color:var(--ink)}
+.add{margin:0 10px 10px;padding:9px;border:0;border-radius:10px;background:var(--ink);color:var(--gold);font-weight:700;font-size:15px}
+.qty{margin:0 10px 10px;display:flex;align-items:center;justify-content:space-between;background:var(--gold);border-radius:10px}.qty button{width:42px;height:38px;border:0;background:none;font-size:22px;font-weight:700}.qty span{font-weight:700;font-size:16px}
+#bar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));background:var(--ink);color:#fff;border:0;border-radius:16px;padding:14px 18px;display:none;justify-content:space-between;font-size:16px;z-index:20;box-shadow:0 8px 24px rgba(0,0,0,.3)}#bar b{color:var(--gold)}
+#sh{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:30;align-items:flex-end}
+#pn{background:#fff;width:100%;max-height:88vh;overflow:auto;border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom))}
+.row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);gap:8px;font-size:15px}.row .qty{margin:0;min-width:112px}
+#nI{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:16px;margin:12px 0}
+.tot{display:flex;justify-content:space-between;font-size:18px;font-weight:700;margin-top:12px}
+.send{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;background:#25d366;color:#fff;font-size:17px;font-weight:700}
+.clr{background:none;border:0;color:var(--mut);margin-top:10px;width:100%;font-size:14px}.emp{text-align:center;color:var(--mut);padding:40px 0}
+</style></head><body>
+<header><div class="br"><b id="bn">PROTEIN COSMETICS</b><span>أسعار الجملة</span></div>
+<input id="q" type="search" placeholder="ابحث عن منتج..." oninput="term=this.value;draw()"><div id="ch"></div></header>
+<main id="m"></main>
+<button id="bar" onclick="openCart()"><span id="bc"></span><b id="bt"></b></button>
+<div id="sh" onclick="if(event.target===this)this.style.display='none'"><div id="pn"></div></div>
+<script src="products.js"></script><script src="images.js"></script>
+<script>
+var cart={},cat='all',term='',P={},fmt=function(n){return n.toLocaleString('en-US')};
+try{cart=JSON.parse(localStorage.getItem('cart')||'{}')}catch(e){}
+CATALOG.sections.forEach(function(s){s.items.forEach(function(i){P[i.id]=i})});
+document.getElementById('bn').textContent=CATALOG.brand;
+function norm(s){return s.replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').toLowerCase()}
+function save(){try{localStorage.setItem('cart',JSON.stringify(cart))}catch(e){}}
+function setCat(c){cat=c;draw()}
+function ctl(id){var q=cart[id]||0;return q?'<div class="qty"><button onclick="chg(\''+id+'\',1)">+</button><span>'+q+'</span><button onclick="chg(\''+id+'\',-1)">−</button></div>':'<button class="add" onclick="chg(\''+id+'\',1)">+ أضف</button>'}
+function draw(){
+  var h='<button class="chip'+(cat=='all'?' on':'')+'" onclick="setCat(\'all\')">الكل</button>';
+  CATALOG.sections.forEach(function(s,i){h+='<button class="chip'+(cat===i?' on':'')+'" onclick="setCat('+i+')">'+s.name+'</button>'});
+  document.getElementById('ch').innerHTML=h;
+  var t=norm(term.trim()),o='';
+  CATALOG.sections.forEach(function(s,i){
+    if(cat!='all'&&cat!==i)return;
+    var it=s.items.filter(function(x){return !t||norm(x.name).indexOf(t)>-1});if(!it.length)return;
+    o+='<h2>'+s.name+'</h2><div class="grid">'+it.map(function(x){
+      return '<div class="card"><div class="im">'+(x.img?'<img src="'+IMGS[x.id]+'" alt="">':x.name.charAt(0))+'</div><div class="nm">'+x.name+'</div><div class="pr"><b>'+fmt(x.price)+'</b> ج.م</div>'+ctl(x.id)+'</div>'}).join('')+'</div>'});
+  document.getElementById('m').innerHTML=o||'<div class="emp">مفيش نتائج</div>';
+  bar();
+}
+function tot(){var n=0,c=0;for(var k in cart){if(P[k]){n+=P[k].price*cart[k];c+=cart[k]}}return[n,c]}
+function bar(){var r=tot(),b=document.getElementById('bar');b.style.display=r[1]?'flex':'none';document.getElementById('bc').textContent='عرض السلة ('+r[1]+')';document.getElementById('bt').textContent=fmt(r[0])+' ج.م'}
+function chg(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];save();draw();if(document.getElementById('sh').style.display=='flex')cartUI()}
+function openCart(){document.getElementById('sh').style.display='flex';cartUI()}
+function cartUI(){
+  var ks=Object.keys(cart).filter(function(k){return P[k]}),r=tot(),nm='';try{nm=localStorage.getItem('cname')||''}catch(e){}
+  if(!ks.length){document.getElementById('sh').style.display='none';return}
+  document.getElementById('pn').innerHTML='<h2 style="margin:0 0 6px">سلة الطلب</h2>'+ks.map(function(k){return '<div class="row"><span>'+P[k].name+'<br><small style="color:#6b6b66">'+fmt(P[k].price)+' ج.م</small></span>'+ctl(k)+'</div>'}).join('')+
+  '<input id="nI" placeholder="اسمك / اسم الصالون (اختياري)" value="'+nm.replace(/"/g,'')+'"><div class="tot"><span>الإجمالي</span><span>'+fmt(r[0])+' ج.م</span></div><button class="send" onclick="send()">إرسال الطلب على واتساب</button><button class="clr" onclick="if(confirm(\'تفريغ السلة؟\')){cart={};save();draw();document.getElementById(\'sh\').style.display=\'none\'}">تفريغ السلة</button>';
+}
+function send(){
+  var n=document.getElementById('nI').value.trim();try{localStorage.setItem('cname',n)}catch(e){}
+  var l=['طلب جديد - '+CATALOG.brand];if(n)l.push('الاسم: '+n);l.push('');
+  Object.keys(cart).forEach(function(k){if(P[k])l.push('• '+P[k].name+' × '+cart[k]+' = '+fmt(P[k].price*cart[k]))});
+  l.push('','الإجمالي: '+fmt(tot()[0])+' ج.م');
+  location.href='https://wa.me/'+CATALOG.whatsapp+'?text='+encodeURIComponent(l.join('\n'));
+}
+draw();
+if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
+</script></body></html>
