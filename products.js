@@ -725,11 +725,23 @@ const CATALOG={
      "name": "جهاز نانو ستيم ",
      "price": 900,
      "img": 1
+    },
+    {
+     "id": "nmurhqebg",
+     "name": "قناع ضوئي برقبه ",
+     "price": 1300,
+     "img": 1
+    },
+    {
+     "id": "nmurhqt94",
+     "name": "ديرما بن A6",
+     "price": 1800,
+     "img": 1
     }
    ]
   },
   {
-   "name": "الكراسي ",
+   "name": "الكراسي والشذلونج",
    "items": [
     {
      "id": "nmuqzz2yn",
@@ -759,6 +771,12 @@ const CATALOG={
      "id": "nmur6s6aj",
      "name": "كرسي مستورد ",
      "price": 7000,
+     "img": 1
+    },
+    {
+     "id": "nmurik3yq",
+     "name": "شاذلونج بالكرسي ",
+     "price": 4800,
      "img": 1
     }
    ]
@@ -858,6 +876,24 @@ const CATALOG={
      "id": "nmur84dsq",
      "name": "سيرم جولد زان",
      "price": 90,
+     "img": 1
+    },
+    {
+     "id": "nmuri72m5",
+     "name": "ديرما رولر",
+     "price": 180,
+     "img": 1
+    },
+    {
+     "id": "nmuricuvc",
+     "name": "كيس إبر بثور",
+     "price": 35,
+     "img": 1
+    },
+    {
+     "id": "nmurig44s",
+     "name": "كبسولات الاكسجينيو ",
+     "price": 1000,
      "img": 1
     }
    ]
@@ -959,6 +995,129 @@ const CATALOG={
      "id": "nmur8q0yx",
      "name": "بودرة تشقير جي كي ",
      "price": 700,
+     "img": 1
+    }
+   ]
+  },
+  {
+   "name": "كلارفينج وديتوكس القشره",
+   "items": [
+    {
+     "id": "nmurhrsdb",
+     "name": "كلارفينج ",
+     "price": 120,
+     "img": 1
+    },
+    {
+     "id": "nmurhruey",
+     "name": "شامبو القشره ",
+     "price": 150,
+     "img": 1
+    },
+    {
+     "id": "nmurhrwbz",
+     "name": "بلديز ديتوكس قشره ",
+     "price": 600,
+     "img": 1
+    }
+   ]
+  },
+  {
+   "name": "البادكير ومستلزماته",
+   "items": [
+    {
+     "id": "nmurhtpca",
+     "name": "كالس أوف ربع ",
+     "price": 300,
+     "img": 1
+    },
+    {
+     "id": "nmurhtrby",
+     "name": "كالس أوف نص ",
+     "price": 450,
+     "img": 1
+    },
+    {
+     "id": "nmurhtssc",
+     "name": "كالس أوف كيلو ",
+     "price": 850,
+     "img": 1
+    },
+    {
+     "id": "nmurhw7ip",
+     "name": "ملح بادكير ",
+     "price": 25,
+     "img": 1
+    },
+    {
+     "id": "nmurhztto",
+     "name": "محفظة أدوات بادكير كبيره ",
+     "price": 250,
+     "img": 1
+    }
+   ]
+  },
+  {
+   "name": "الرفايع",
+   "items": [
+    {
+     "id": "nmurhvcwe",
+     "name": "فرشة توزيع مستورده ",
+     "price": 25,
+     "img": 1
+    },
+    {
+     "id": "nmurhws8z",
+     "name": "كلبسات تمساح ",
+     "price": 30,
+     "img": 1
+    },
+    {
+     "id": "nmurhxoo5",
+     "name": "كلبسات معدن ",
+     "price": 35,
+     "img": 1
+    },
+    {
+     "id": "nmurhy8w6",
+     "name": "فرشة توزيع ماسكات سيليكون ",
+     "price": 25,
+     "img": 1
+    },
+    {
+     "id": "nmuri1ax7",
+     "name": "مشط حراري ",
+     "price": 15,
+     "img": 1
+    },
+    {
+     "id": "nmuri2ce3",
+     "name": "مضرب صبغه ",
+     "price": 20,
+     "img": 1
+    },
+    {
+     "id": "nmuri3np6",
+     "name": "كيس شيت ماسك وجه",
+     "price": 120,
+     "img": 1
+    },
+    {
+     "id": "nmuri4xpq",
+     "name": "ودانه سيليكون",
+     "price": 30,
+     "img": 1
+    },
+    {
+     "id": "nmuribgml",
+     "name": "طبق توزيع اكليرك كبير",
+     "price": 60,
+     "img": 1
+    },
+    {
+     "id": "nmuribuxc",
+     "name": "سفنجه شيڤي",
+     "price": 30,
      "img": 1
     }
    ]
