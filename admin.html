@@ -33,7 +33,7 @@ function render(){
   document.getElementById('m').innerHTML=S.sections.map(function(s,a){
     return '<div class="box"><div class="sec"><input data-k="sn" data-s="'+a+'" value="'+esc(s.name)+'"><button class="r" data-a="delsec" data-s="'+a+'">حذف</button></div>'+
     s.items.map(function(x,b){return '<div class="it"><div class="th">'+(x.img&&I[x.id]?'<img src="'+I[x.id]+'">':'+ صورة')+'<input type="file" accept="image/*" data-k="img" data-s="'+a+'" data-i="'+b+'"></div>'+
-      '<div class="f"><input data-k="n" data-s="'+a+'" data-i="'+b+'" placeholder="اسم المنتج" value="'+esc(x.name)+'"><div class="pr"><input type="number" inputmode="numeric" data-k="p" data-s="'+a+'" data-i="'+b+'" value="'+x.price+'"><span>ج.م</span></div></div>'+
+      '<div class="f"><input data-k="n" data-s="'+a+'" data-i="'+b+'" placeholder="اسم المنتج" value="'+esc(x.name)+'"><div class="pr"><input type="number" inputmode="numeric" data-k="p" data-s="'+a+'" data-i="'+b+'" value="'+x.price+'"><span>ج.م</span></div><div class="pr"><input type="number" step="any" inputmode="decimal" data-k="g" data-s="'+a+'" data-i="'+b+'" placeholder="سعر الجرام (اختياري)" value="'+(x.gram||'')+'" style="width:170px"><span>ج.م/جم</span></div>'+(x.parts?'<div class="pr" style="flex-wrap:wrap">'+x.parts.map(function(q,j){return '<input type="number" step="any" inputmode="decimal" data-k="pt" data-s="'+a+'" data-i="'+b+'" data-j="'+j+'" value="'+q.p+'" style="width:64px"><span>'+q.n+'</span>'}).join('')+'</div>':'')+'</div>'+
       '<button class="r" data-a="del" data-s="'+a+'" data-i="'+b+'">×</button></div>'}).join('')+
     '<button class="l" style="width:100%;margin-top:8px" data-a="add" data-s="'+a+'">+ منتج جديد في '+esc(s.name)+'</button></div>'}).join('');
   st();
@@ -41,7 +41,7 @@ function render(){
 function pic(file,cb){var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var k=Math.min(1,340/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.66))};im.src=r.result};r.readAsDataURL(file)}
 var m=document.getElementById('m');
 m.addEventListener('input',function(e){var t=e.target,k=t.dataset.k,s=S.sections[t.dataset.s];if(!k||k=='img')return;
-  if(k=='sn')s.name=t.value;else{var x=s.items[t.dataset.i];if(k=='n')x.name=t.value;else x.price=parseInt(t.value)||0}dirty=true;st()});
+  if(k=='sn')s.name=t.value;else{var x=s.items[t.dataset.i];if(k=='n')x.name=t.value;else if(k=='pt'){x.parts[t.dataset.j].p=parseFloat(t.value)||0}else if(k=='g'){var v=parseFloat(t.value);if(v>0)x.gram=v;else delete x.gram}else x.price=parseInt(t.value)||0}dirty=true;st()});
 m.addEventListener('change',function(e){var t=e.target;if(t.dataset.k!='img'||!t.files[0])return;var x=S.sections[t.dataset.s].items[t.dataset.i];
   pic(t.files[0],function(d){I[x.id]=d;x.img=1;dirty=true;render()})});
 document.addEventListener('click',function(e){var t=e.target.closest('button');if(!t||!t.dataset.a)return;var a=t.dataset.a,s=S.sections[t.dataset.s];

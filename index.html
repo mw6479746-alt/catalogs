@@ -25,13 +25,13 @@ h2{font-size:17px;margin:18px 14px 10px}
 .f{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:16px;margin:6px 0;font-family:inherit;display:block}.er{color:#c0392b;font-size:14px;margin-top:8px;min-height:18px}.lb{font-size:13px;color:var(--mut);margin-top:10px}
 .tot{display:flex;justify-content:space-between;font-size:18px;font-weight:700;margin-top:12px}
 .send{width:100%;padding:14px;margin-top:12px;border:0;border-radius:12px;background:#25d366;color:#fff;font-size:17px;font-weight:700}
-.clr{background:none;border:0;color:var(--mut);margin-top:10px;width:100%;font-size:14px}.emp{text-align:center;color:var(--mut);padding:40px 0}
+.gb{background:#fff;color:var(--ink);border:2px solid var(--ink);margin-top:-4px}.clr{background:none;border:0;color:var(--mut);margin-top:10px;width:100%;font-size:14px}.emp{text-align:center;color:var(--mut);padding:40px 0}
 </style></head><body>
 <header><div class="br"><b id="bn">PROTEIN COSMETICS</b><span>أسعار الجملة</span></div>
 <input id="q" type="search" placeholder="ابحث عن منتج..." oninput="term=this.value;draw()"><div id="ch"></div></header>
 <main id="m"></main>
 <button id="bar" onclick="openCart()"><span id="bc"></span><b id="bt"></b></button>
-<div id="sh" onclick="if(event.target===this)this.style.display='none'"><div id="pn"></div></div>
+<div id="sh" onclick="if(event.target===this){this.style.display='none';pv=null}"><div id="pn"></div></div>
 <script src="products.js"></script><script src="images.js"></script>
 <script>
 var cart={},cat='all',term='',P={},fmt=function(n){return n.toLocaleString('en-US')};
@@ -51,21 +51,32 @@ function draw(){
     if(cat!='all'&&cat!==i)return;
     var it=s.items.filter(function(x){return !t||norm(x.name).indexOf(t)>-1});if(!it.length)return;
     o+='<h2>'+s.name+'</h2><div class="grid">'+it.map(function(x){
-      return '<div class="card"><div class="im">'+(x.img?'<img src="'+IMGS[x.id]+'" alt="">':x.name.charAt(0))+'</div><div class="nm">'+x.name+'</div><div class="pr"><b>'+fmt(x.price)+'</b> ج.م</div>'+ctl(x.id)+'</div>'}).join('')+'</div>'});
+      return '<div class="card"><div class="im">'+(x.img?'<img src="'+IMGS[x.id]+'" alt="">':x.name.charAt(0))+'</div><div class="nm">'+x.name+'</div><div class="pr"><b>'+fmt(x.price)+'</b> ج.م'+(x.gram?' / لتر':x.parts?' / المجموعة':'')+'</div>'+ctl(x.id)+(x.gram?gbtn(x):'')+(x.parts?pbtn(x):'')+'</div>'}).join('')+'</div>'});
   document.getElementById('m').innerHTML=o||'<div class="emp">مفيش نتائج</div>';
   bar();
 }
-function tot(){var n=0,c=0;for(var k in cart){if(P[k]){n+=P[k].price*cart[k];c+=cart[k]}}return[n,c]}
+function pid(k){return k.split('~')[0]}
+function isG(k){return /~g$/.test(k)}
+function isP(k){return /~\d+$/.test(k)}
+var pv=null;
+function line(k){var p=P[pid(k)];if(isG(k))return Math.round(p.gram*cart[k]);if(isP(k))return Math.round(p.parts[+k.split('~')[1]].p*cart[k]);return p.price*cart[k]}
+function tot(){var n=0,c=0;for(var k in cart){if(P[pid(k)]){n+=line(k);c+=isG(k)?1:cart[k]}}return[n,c]}
+function minG(){return CATALOG.minGrams||100}
+function setG(k,v){var n=parseInt(digits(String(v)))||0,m=minG();if(n>0&&n<m){alert('أقل كمية بالجرام '+m);n=m}if(n<=0)delete cart[k];else cart[k]=n;save();draw();cartUI()}
+function addG(id){var k=id+'~g',v=prompt('اكتب عدد الجرامات (أقل كمية '+minG()+')',cart[k]||minG());if(v===null)return;setG(k,v)}
+function pbtn(x){var n=0;x.parts.forEach(function(_,i){n+=cart[x.id+'~'+i]||0});return '<button class="add gb" onclick="partsUI(\''+x.id+'\')">'+(n?'القطع المختارة: '+n+' ✓':'اختار قطع من المجموعة')+'</button>'}
+function partsUI(id){pv=id;var p=P[id];document.getElementById('sh').style.display='flex';document.getElementById('pn').innerHTML='<h2 style="margin:0 0 4px">'+p.name+' — قطع المجموعة</h2><div style="color:#6b6b66;font-size:13px;margin-bottom:6px">المجموعة كاملة '+fmt(p.price)+' ج.م</div>'+p.parts.map(function(x,i){return '<div class="row"><span>'+x.n+'<br><small style="color:#6b6b66">'+fmt(x.p)+' ج.م</small></span>'+ctl(id+'~'+i)+'</div>'}).join('')+'<button class="send" style="background:#111;color:#f5c400" onclick="document.getElementById(\'sh\').style.display=\'none\';pv=null">تم</button>'}
+function gbtn(x){var g=cart[x.id+'~g'];return '<button class="add gb" onclick="addG(\''+x.id+'\')">'+(g?'بالجرام: '+g+' جم ✓':'بالجرام ('+fmt(x.gram)+' ج/جم)')+'</button>'}
 function bar(){var r=tot(),b=document.getElementById('bar');b.style.display=r[1]?'flex':'none';document.getElementById('bc').textContent='عرض السلة ('+r[1]+')';document.getElementById('bt').textContent=fmt(r[0])+' ج.م'}
-function chg(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];save();draw();if(document.getElementById('sh').style.display=='flex')cartUI()}
-function openCart(){document.getElementById('sh').style.display='flex';cartUI()}
+function chg(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];save();draw();if(document.getElementById('sh').style.display=='flex'){if(pv)partsUI(pv);else cartUI()}}
+function openCart(){pv=null;document.getElementById('sh').style.display='flex';cartUI()}
 var F={n:'',p:'',a:''};try{F=JSON.parse(localStorage.getItem('cform')||'')||F}catch(e){}
 function setF(k,v){F[k]=v;try{localStorage.setItem('cform',JSON.stringify(F))}catch(e){}}
 function esc(t){return (t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
 function cartUI(){
-  var ks=Object.keys(cart).filter(function(k){return P[k]}),r=tot();
+  var ks=Object.keys(cart).filter(function(k){return P[pid(k)]}),r=tot();
   if(!ks.length){document.getElementById('sh').style.display='none';return}
-  document.getElementById('pn').innerHTML='<h2 style="margin:0 0 6px">سلة الطلب</h2>'+ks.map(function(k){return '<div class="row"><span>'+P[k].name+'<br><small style="color:#6b6b66">'+fmt(P[k].price)+' ج.م</small></span>'+ctl(k)+'</div>'}).join('')+
+  document.getElementById('pn').innerHTML='<h2 style="margin:0 0 6px">سلة الطلب</h2>'+ks.map(function(k){var g=isG(k),p=P[pid(k)],pc=isP(k)?p.parts[+k.split('~')[1]]:null;return '<div class="row"><span>'+p.name+(g?' (بالجرام)':pc?' — '+pc.n:'')+'<br><small style="color:#6b6b66">'+(g?fmt(p.gram)+' ج.م / جرام':fmt(pc?pc.p:p.price)+' ج.م')+'</small></span>'+(g?'<div class="qty"><input type="number" inputmode="numeric" value="'+cart[k]+'" onchange="setG(\''+k+'\',this.value)" style="width:64px;border:0;background:none;text-align:center;font-weight:700;font-size:16px"><span style="font-size:13px">جم</span><button onclick="setG(\''+k+'\',0)">×</button></div>':ctl(k))+'</div>'}).join('')+
   '<div class="tot"><span>الإجمالي</span><span>'+fmt(r[0])+' ج.م</span></div>'+
   '<div class="lb">بيانات التوصيل (كلها مطلوبة)</div>'+
   '<input class="f" placeholder="الاسم بالكامل / اسم الصالون" value="'+esc(F.n)+'" oninput="setF(\'n\',this.value)">'+
@@ -83,7 +94,7 @@ function check(){
 }
 function msg(){
   var l=['طلب جديد - '+CATALOG.brand,'','الاسم: '+F.n.trim(),'الموبايل: '+digits(F.p).trim(),'العنوان: '+F.a.trim(),'','الأصناف:'];
-  Object.keys(cart).forEach(function(k){if(P[k])l.push('• '+P[k].name+' × '+cart[k]+' = '+fmt(P[k].price*cart[k]))});
+  Object.keys(cart).forEach(function(k){var p=P[pid(k)];if(!p)return;l.push(isG(k)?'• '+p.name+' — '+cart[k]+' جرام = '+fmt(line(k)):isP(k)?'• '+p.name+' — '+p.parts[+k.split('~')[1]].n+' × '+cart[k]+' = '+fmt(line(k)):'• '+p.name+(p.gram?' (لتر)':'')+' × '+cart[k]+' = '+fmt(line(k)))});
   l.push('','الإجمالي: '+fmt(tot()[0])+' ج.م');
   return 'https://wa.me/'+CATALOG.whatsapp+'?text='+encodeURIComponent(l.join('\n'));
 }
