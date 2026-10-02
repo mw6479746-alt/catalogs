@@ -585,7 +585,7 @@ const CATALOG={
     {
      "id": "nmuqcqxs4",
      "name": "جهاز بخار 2 دراع ",
-     "price": 2700,
+     "price": 2500,
      "img": 1
     },
     {
@@ -610,6 +610,120 @@ const CATALOG={
      "id": "nmuqcvxm4",
      "name": "هيدروفيشال 7 مراحل ",
      "price": 6500,
+     "img": 1
+    },
+    {
+     "id": "nmur6tohv",
+     "name": "حوض بادكير كهربا ",
+     "price": 1200,
+     "img": 1
+    },
+    {
+     "id": "nmur6u6gi",
+     "name": "حوض بادكير سيليكون ",
+     "price": 1000,
+     "img": 1
+    },
+    {
+     "id": "nmur6vp0i",
+     "name": "حوض بادكير ديچيتال",
+     "price": 1500,
+     "img": 1
+    },
+    {
+     "id": "nmur71zx7",
+     "name": "شفط دهون بالبخار ",
+     "price": 450,
+     "img": 1
+    },
+    {
+     "id": "nmur72u0d",
+     "name": "جهاز فرش ميني",
+     "price": 500,
+     "img": 1
+    },
+    {
+     "id": "nmur73mq0",
+     "name": "ديرما بن A1",
+     "price": 1200,
+     "img": 1
+    },
+    {
+     "id": "nmur74m40",
+     "name": "جهاز شفط دهون عادي",
+     "price": 250,
+     "img": 1
+    },
+    {
+     "id": "nmur75zy9",
+     "name": "جهاز فرش ديچيتال",
+     "price": 1600,
+     "img": 1
+    },
+    {
+     "id": "nmur778re",
+     "name": "جهاز واكس معدن عين واحده ",
+     "price": 750,
+     "img": 1
+    },
+    {
+     "id": "nmur78uts",
+     "name": "جهاز شمع بارافين",
+     "price": 750,
+     "img": 1
+    },
+    {
+     "id": "nmur7g1et",
+     "name": "جهاز هاي فركوانسي",
+     "price": 650,
+     "img": 1
+    },
+    {
+     "id": "nmur7gg9m",
+     "name": "جهاز التراسونيك بروفيشنال ",
+     "price": 500,
+     "img": 1
+    },
+    {
+     "id": "nmur7hn92",
+     "name": "قناع ضوئي بدون رقبه",
+     "price": 1100,
+     "img": 1
+    },
+    {
+     "id": "nmur7imw8",
+     "name": "بروكاب حراري ",
+     "price": 120,
+     "img": 1
+    },
+    {
+     "id": "nmur7jlx1",
+     "name": "مبرد كهربائي",
+     "price": 550,
+     "img": 1
+    },
+    {
+     "id": "nmur7ls27",
+     "name": "جهاز التراسونيك قاعده بروفيشنال ",
+     "price": 750,
+     "img": 1
+    },
+    {
+     "id": "nmur7p93z",
+     "name": "عدسه مضيئه",
+     "price": 1500,
+     "img": 1
+    },
+    {
+     "id": "nmur7povv",
+     "name": "جهاز التراسونيك عادي ",
+     "price": 250,
+     "img": 1
+    },
+    {
+     "id": "nmur85en1",
+     "name": "جهاز نانو ستيم ",
+     "price": 900,
      "img": 1
     }
    ]
@@ -639,6 +753,12 @@ const CATALOG={
      "id": "nmur0lh2c",
      "name": "حوض غسيل متنقل ",
      "price": 1700,
+     "img": 1
+    },
+    {
+     "id": "nmur6s6aj",
+     "name": "كرسي مستورد ",
+     "price": 7000,
      "img": 1
     }
    ]
@@ -674,6 +794,171 @@ const CATALOG={
      "id": "nmur0iy8y",
      "name": "تيربو متنقل",
      "price": 1500,
+     "img": 1
+    },
+    {
+     "id": "nmur6syxk",
+     "name": "ترابيزه زجاج متنقله ",
+     "price": 1500,
+     "img": 1
+    }
+   ]
+  },
+  {
+   "name": "شفرات ديرما بلانينج",
+   "items": [
+    {
+     "id": "nmur7scq6",
+     "name": "شفرات ديرما هندي ",
+     "price": 650,
+     "img": 1
+    },
+    {
+     "id": "nmur7tctj",
+     "name": "شفرات ديرما برامونت ",
+     "price": 450,
+     "img": 1
+    },
+    {
+     "id": "nmur7tyma",
+     "name": "شفرات ديرما صيني ",
+     "price": 350,
+     "img": 1
+    }
+   ]
+  },
+  {
+   "name": "البشره",
+   "items": [
+    {
+     "id": "nmur7vkgp",
+     "name": "امبولات Dr Skin",
+     "price": 150,
+     "img": 1
+    },
+    {
+     "id": "nmur7zojl",
+     "name": "كبسولات ڤيتامين E",
+     "price": 125,
+     "img": 1
+    },
+    {
+     "id": "nmur7zqdf",
+     "name": "آيس هوك ",
+     "price": 150,
+     "img": 1
+    },
+    {
+     "id": "nmur81u9j",
+     "name": "بوكس البشره ",
+     "price": 900,
+     "img": 1
+    },
+    {
+     "id": "nmur84dsq",
+     "name": "سيرم جولد زان",
+     "price": 90,
+     "img": 1
+    }
+   ]
+  },
+  {
+   "name": "الصبغات ومستلزماتها",
+   "items": [
+    {
+     "id": "nmur8e1ff",
+     "name": "صبغة جي كي ",
+     "price": 200,
+     "img": 1
+    },
+    {
+     "id": "nmur8eds2",
+     "name": "صبغة ماكسيما ",
+     "price": 170,
+     "img": 1
+    },
+    {
+     "id": "nmur8eoer",
+     "name": "كونتراست احمر ناري ",
+     "price": 210,
+     "img": 1
+    },
+    {
+     "id": "nmur8eppw",
+     "name": "كونتراست احمر أرجواني ",
+     "price": 210,
+     "img": 1
+    },
+    {
+     "id": "nmur8ftze",
+     "name": "اكسجين كوكو ",
+     "price": 55,
+     "img": 1
+    },
+    {
+     "id": "nmur8fvyb",
+     "name": "اكسجين وايلد كالر",
+     "price": 150,
+     "img": 1
+    },
+    {
+     "id": "nmur8fxkv",
+     "name": "اكسجين جي كي ",
+     "price": 250,
+     "img": 1
+    },
+    {
+     "id": "nmur8jjon",
+     "name": "اكسجين بلوب تركيز 20%",
+     "price": 60,
+     "img": 1
+    },
+    {
+     "id": "nmur8jljj",
+     "name": "اكسجين بلوب تركيز 30%",
+     "price": 60,
+     "img": 1
+    },
+    {
+     "id": "nmur8lquq",
+     "name": "اكسجين بلوب تركيز 40%",
+     "price": 60,
+     "img": 1
+    },
+    {
+     "id": "nmur8n58x",
+     "name": "بودرة بلوب أزرق نص ",
+     "price": 190,
+     "img": 1
+    },
+    {
+     "id": "nmur8n6n5",
+     "name": "بودرة بلوب أبيض نص ",
+     "price": 190,
+     "img": 1
+    },
+    {
+     "id": "nmur8n815",
+     "name": "بودرة بلوب أزرق ربع ",
+     "price": 95,
+     "img": 1
+    },
+    {
+     "id": "nmur8p791",
+     "name": "بودرة بلوب أبيض ربع",
+     "price": 95,
+     "img": 1
+    },
+    {
+     "id": "nmur8po1f",
+     "name": "بودرة بلوب أحمر ",
+     "price": 150,
+     "img": 1
+    },
+    {
+     "id": "nmur8q0yx",
+     "name": "بودرة تشقير جي كي ",
+     "price": 700,
      "img": 1
     }
    ]
