@@ -578,6 +578,41 @@ const CATALOG={
      "img": 1
     }
    ]
+  },
+  {
+   "name": "الأجهزه",
+   "items": [
+    {
+     "id": "nmuqcqxs4",
+     "name": "جهاز بخار 2 دراع ",
+     "price": 2700,
+     "img": 1
+    },
+    {
+     "id": "nmuqcso6e",
+     "name": "جهاز بخار دراع واحد ",
+     "price": 1300,
+     "img": 1
+    },
+    {
+     "id": "nmuqcttnl",
+     "name": "اوكسيجينيو ",
+     "price": 2800,
+     "img": 1
+    },
+    {
+     "id": "nmuqcv2sq",
+     "name": "تقشير ماسي ",
+     "price": 2900,
+     "img": 1
+    },
+    {
+     "id": "nmuqcvxm4",
+     "name": "هيدروفيشال 7 مراحل ",
+     "price": 6500,
+     "img": 1
+    }
+   ]
   }
  ],
  "minGrams": 50
