@@ -1,5 +1,5 @@
 const CATALOG={
- "brand": "PROTEIN & COSMETICS",
+ "brand": "PROTEIN COSMETICS",
  "whatsapp": "201021602774",
  "sections": [
   {
@@ -509,27 +509,32 @@ const CATALOG={
     {
      "id": "p48",
      "name": "هوم جولد",
-     "price": 350
+     "price": 350,
+     "img": 1
     },
     {
      "id": "p49",
      "name": "اكس 6",
-     "price": 850
+     "price": 850,
+     "img": 1
     },
     {
      "id": "p50",
      "name": "كورنر",
-     "price": 1000
+     "price": 1000,
+     "img": 1
     },
     {
      "id": "p51",
      "name": "تورنيدو",
-     "price": 1500
+     "price": 1500,
+     "img": 1
     },
     {
      "id": "p52",
      "name": "ليزا",
-     "price": 1800
+     "price": 1800,
+     "img": 1
     }
    ]
   },
