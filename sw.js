@@ -1,5 +1,5 @@
-const CACHE='catalog-v8';
-const CORE=['./','./index.html','./products.js','./manifest.json','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
+const CACHE='catalog-v9';
+const CORE=['./','./index.html','./products.js','./thumbs.js','./manifest.json','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 const INDEX=new URL('./index.html',self.registration.scope).href;
 function key(req){const u=new URL(req.url);return u.pathname.endsWith('/')?INDEX:u.origin+u.pathname}
 async function putOne(c,u,force){
