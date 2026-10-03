@@ -104,7 +104,7 @@ const CATALOG={
      "gram": 3
     },
     {
-     "id": "nmusnyjdz",
+     "id": "nmusoaxx2",
      "name": "وايت جولد ",
      "price": 3500,
      "img": 1
@@ -388,6 +388,12 @@ const CATALOG={
        "p": 110
       }
      ]
+    },
+    {
+     "id": "nmusogu0o",
+     "name": "ڤيلور",
+     "price": 350,
+     "img": 1
     }
    ]
   },
@@ -1139,6 +1145,29 @@ const CATALOG={
      "name": "سفنجه شيڤي",
      "price": 30,
      "img": 1
+    }
+   ]
+  },
+  {
+   "name": "التساقط والانبات",
+   "items": [
+    {
+     "id": "nmusobplu",
+     "name": "إيلاڤيم",
+     "price": 160,
+     "img": 1
+    },
+    {
+     "id": "nmusod4s2",
+     "name": "بخاخ فاستر ",
+     "price": 200,
+     "img": 1,
+     "gal": [
+      "gmusoe3rhr5lw",
+      "gmusoe3stwlr9",
+      "gmusoe3uej60b",
+      "gmusoe3vwudtk"
+     ]
     }
    ]
   }
