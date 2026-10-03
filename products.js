@@ -944,24 +944,6 @@ const CATALOG={
      "img": 1
     },
     {
-     "id": "nmur8jjon",
-     "name": "اكسجين بلوب تركيز 20%",
-     "price": 60,
-     "img": 1
-    },
-    {
-     "id": "nmur8jljj",
-     "name": "اكسجين بلوب تركيز 30%",
-     "price": 60,
-     "img": 1
-    },
-    {
-     "id": "nmur8lquq",
-     "name": "اكسجين بلوب تركيز 40%",
-     "price": 60,
-     "img": 1
-    },
-    {
      "id": "nmur8n58x",
      "name": "بودرة بلوب أزرق نص ",
      "price": 190,
@@ -996,6 +978,26 @@ const CATALOG={
      "name": "بودرة تشقير جي كي ",
      "price": 700,
      "img": 1
+    },
+    {
+     "id": "nmurn2ry5",
+     "name": "اكسجين بلوب 20%",
+     "price": 60,
+     "img": 1,
+     "variants": [
+      {
+       "id": "vmurn3awr",
+       "n": "اكسجين بلوب 30%",
+       "img": 1,
+       "p": 60
+      },
+      {
+       "id": "vmurn3ts9",
+       "n": "اكسجين بلوب 40%",
+       "img": 1,
+       "p": 60
+      }
+     ]
     }
    ]
   },
