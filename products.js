@@ -102,6 +102,12 @@ const CATALOG={
      "price": 2700,
      "img": 1,
      "gram": 3
+    },
+    {
+     "id": "nmusnyjdz",
+     "name": "وايت جولد ",
+     "price": 3500,
+     "img": 1
     }
    ]
   },
