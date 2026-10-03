@@ -1,4 +1,4 @@
-const CACHE='catalog-v2';
+const CACHE='catalog-v6';
 const FILES=['./','./index.html','./products.js','./manifest.json','./icon-192.png','./icon-512.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).catch(()=>{}));self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==CACHE).map(x=>caches.delete(x)))));self.clients.claim()});
@@ -9,7 +9,7 @@ self.addEventListener('fetch',e=>{
     const cache=await caches.open(CACHE);
     const net=fetch(e.request).then(r=>{if(r&&r.ok)cache.put(e.request,r.clone());return r});
     const hit=await cache.match(e.request);
-    if(!hit)return net.catch(()=>caches.match('./index.html'));
+    if(!hit)return net.catch(()=>e.request.mode==='navigate'?caches.match('./index.html'):Response.error());
     e.waitUntil(net.catch(()=>{}));
     return Promise.race([net.catch(()=>hit),new Promise(res=>setTimeout(()=>res(hit),4000))]);
   })());
