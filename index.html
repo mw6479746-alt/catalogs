@@ -58,7 +58,7 @@ window.onerror=function(m,u,l){showErr('خطأ: '+m+' @'+String(u).split('/').po
 setTimeout(function(){if(!window.__drawn)showErr('الصفحة لسه بتحمّل... لو فضلت كده حدّث الصفحة')},12000);
 </script>
 <script src="products.js" onerror="showErr('ملف products.js ماتحملش')"></script>
-<script src="images.js" async onload="window.__imgs=1;window.imgsReady&&imgsReady()" onerror="window.__imgfail=1"></script>
+<script>(function(){var n=0;function go(){var s=document.createElement('script');s.src='images.js'+(n?'?r='+n+'-'+Date.now():'');s.onload=function(){window.__imgs=1;window.imgsReady&&imgsReady()};s.onerror=function(){window.__imgfail=1;if(++n<6)setTimeout(go,1500*n)};document.head.appendChild(s)}go()})();</script>
 <script>
 function IM(k){return typeof IMGS!=='undefined'&&IMGS[k]||''}
 var cart={},cat='all',term='',P={},fmt=function(n){return n.toLocaleString('en-US')};
