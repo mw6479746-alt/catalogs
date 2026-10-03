@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>فحص</title>
+<style>
+body{font-family:Tahoma,Arial,sans-serif;background:#111;color:#eee;padding:14px;font-size:14px;line-height:1.7}
+h1{font-size:18px;color:#f5c400;margin:0 0 10px}
+.l{padding:6px 0;border-bottom:1px solid #333;word-break:break-all;direction:ltr;text-align:left}
+.ok{color:#4ade80}.bad{color:#f87171}.n{color:#bbb}
+button{background:#f5c400;color:#111;border:0;border-radius:10px;padding:12px 14px;font-size:15px;font-weight:700;margin:10px 6px 0 0}
+</style></head><body>
+<h1>فحص الكتالوج</h1>
+<div id="o"></div>
+<button onclick="fix()">امسح الـ Service Worker والكاش وأعد التحميل</button>
+<script>
+var o=document.getElementById('o'),errs=[];
+function L(t,c){var d=document.createElement('div');d.className='l '+(c||'n');d.textContent=t;o.appendChild(d)}
+window.addEventListener('error',function(e){if(e.message)errs.push(e.message+' @'+String(e.filename||'').split('/').pop())});
+function fix(){
+  var p=[];
+  if(navigator.serviceWorker)p.push(navigator.serviceWorker.getRegistrations().then(function(r){return Promise.all(r.map(function(x){return x.unregister()}))}));
+  if(window.caches)p.push(caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x)}))}));
+  Promise.all(p).then(function(){alert('تم. هيتعمل تحميل تاني للصفحة.');location.reload()});
+}
+function load(src){return new Promise(function(res){var s=document.createElement('script');s.src=src;s.onload=function(){res('load')};s.onerror=function(){res('error')};document.head.appendChild(s)})}
+(async function(){
+  L('الوقت: '+new Date().toString());
+  if(navigator.serviceWorker){
+    var regs=await navigator.serviceWorker.getRegistrations();
+    L('عدد الـ Service Workers المسجّلة: '+regs.length,regs.length?'bad':'ok');
+    regs.forEach(function(r){var w=r.active||r.waiting||r.installing;L('  scope='+r.scope+' | script='+(w?w.scriptURL.split('/').pop():'?')+' | state='+(w?w.state:'?'))});
+    L('الصفحة متحكَّم فيها بـ SW: '+(navigator.serviceWorker.controller?'أيوه':'لأ'),navigator.serviceWorker.controller?'bad':'ok');
+  }
+  if(window.caches){
+    var ks=await caches.keys();
+    L('الكاشات: '+(ks.join(', ')||'مفيش'));
+    for(var i=0;i<ks.length;i++){var c=await caches.open(ks[i]),rq=await c.keys();L('  '+ks[i]+': '+rq.map(function(r){return r.url.split('/').pop()||'/'}).join(', '))}
+  }
+  var a=await load('products.js');
+  L('products.js تحميل: '+a,a=='load'?'ok':'bad');
+  L('CATALOG: '+(typeof CATALOG!=='undefined'?'معرّف، أقسام='+CATALOG.sections.length:'غير معرّف'),typeof CATALOG!=='undefined'?'ok':'bad');
+  var b=await load('images.js');
+  L('images.js تحميل كـ script: '+b,b=='load'?'ok':'bad');
+  var okI=typeof IMGS!=='undefined';
+  L('IMGS: '+(okI?'معرّف، عدد الصور='+Object.keys(IMGS).length:'غير معرّف'),okI?'ok':'bad');
+  try{
+    var r=await fetch('images.js',{cache:'no-store'}),t=await r.text();
+    L('fetch images.js: status='+r.status+' | type='+r.headers.get('content-type')+' | طول='+t.length);
+    L('بداية الملف: '+t.slice(0,25).replace(/\s+/g,' '));
+    L('نهاية الملف: '+t.slice(-15).replace(/\s+/g,' '),/\};\s*$/.test(t)?'ok':'bad');
+  }catch(e){L('fetch فشل: '+e,'bad')}
+  L('أخطاء جافاسكريبت: '+(errs.join(' || ')||'مفيش'),errs.length?'bad':'ok');
+  L('--- انتهى. ابعت سكرين شوت للصفحة كلها ---');
+})();
+</script></body></html>
