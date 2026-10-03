@@ -1,4 +1,4 @@
-const CACHE='catalog-v7';
+const CACHE='catalog-v8';
 const CORE=['./','./index.html','./products.js','./manifest.json','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 const INDEX=new URL('./index.html',self.registration.scope).href;
 function key(req){const u=new URL(req.url);return u.pathname.endsWith('/')?INDEX:u.origin+u.pathname}
@@ -47,6 +47,16 @@ self.addEventListener('fetch',e=>{
   if(u.origin!==location.origin)return;
   if(/admin\.html/.test(q.url)||/admin\.html/.test(q.referrer||''))return; // صفحة الإدارة دايماً من الشبكة
   const k=key(q),isProd=/\/products\.js$/.test(u.pathname);
+  // الصور: من المحفوظ فوراً (من غير انتظار الشبكة)، وتتحدّث في الخلفية للمرة الجاية
+  if(/\/img-[^/]+\.jpg$/.test(u.pathname)){
+    e.respondWith((async()=>{
+      const c=await caches.open(CACHE),hit=await c.match(k);
+      const net=fetch(q).then(r=>{if(r&&r.status===200)c.put(k,r.clone());return r});
+      e.waitUntil(net.catch(()=>{}));
+      return hit||net.catch(()=>Response.error());
+    })());
+    return;
+  }
   e.respondWith((async()=>{
     const c=await caches.open(CACHE);
     let pre=Promise.resolve();
