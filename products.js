@@ -819,6 +819,12 @@ const CATALOG={
      "name": "ترابيزه زجاج متنقله ",
      "price": 1500,
      "img": 1
+    },
+    {
+     "id": "nmus659kx",
+     "name": "حامل استشوار ",
+     "price": 700,
+     "img": 1
     }
    ]
   },
@@ -980,24 +986,24 @@ const CATALOG={
      "img": 1
     },
     {
-     "id": "nmurn2ry5",
+     "id": "nmus61kro",
      "name": "اكسجين بلوب 20%",
      "price": 60,
-     "img": 1,
      "variants": [
       {
-       "id": "vmurn3awr",
+       "id": "vmus63dc0",
        "n": "اكسجين بلوب 30%",
        "img": 1,
        "p": 60
       },
       {
-       "id": "vmurn3ts9",
+       "id": "vmus64ehz",
        "n": "اكسجين بلوب 40%",
-       "img": 1,
-       "p": 60
+       "p": 60,
+       "img": 1
       }
-     ]
+     ],
+     "img": 1
     }
    ]
   },
