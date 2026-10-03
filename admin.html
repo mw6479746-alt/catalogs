@@ -43,7 +43,7 @@ function render(){
     '<button class="l" style="width:100%;margin-top:8px" data-a="add" data-s="'+a+'">+ منتج جديد في '+esc(s.name)+'</button></div>'}).join('');
   st();
 }
-function pic(file,cb){var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var k=Math.min(1,700/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.78))};im.src=r.result};r.readAsDataURL(file)}
+function pic(file,cb){var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var k=Math.min(1,1200/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.85))};im.src=r.result};r.readAsDataURL(file)}
 var m=document.getElementById('m');
 m.addEventListener('input',function(e){var t=e.target,k=t.dataset.k,s=S.sections[t.dataset.s];if(!k||k=='img')return;
   if(k=='sn')s.name=t.value;else{var x=s.items[t.dataset.i];if(k=='n')x.name=t.value;else if(k=='vn'){x.variants[t.dataset.j].n=t.value}else if(k=='vd'){var vq=x.variants[t.dataset.j];if(t.value.trim())vq.d=t.value;else delete vq.d}else if(k=='vp'){var w=parseFloat(t.value);if(w>0)x.variants[t.dataset.j].p=w;else delete x.variants[t.dataset.j].p}else if(k=='pt'){x.parts[t.dataset.j].p=parseFloat(t.value)||0}else if(k=='g'){var v=parseFloat(t.value);if(v>0)x.gram=v;else delete x.gram}else x.price=parseInt(t.value)||0}dirty=true;st()});
