@@ -34,9 +34,10 @@ h2{font-size:17px;margin:18px 14px 10px}
 .im img{cursor:zoom-in}
 .vs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}.vs::-webkit-scrollbar{display:none}
 .vsl{flex:0 0 100%;scroll-snap-align:center;display:flex;flex-direction:column}
-.vim{aspect-ratio:auto;height:min(230px,58vw);background:#fff}.vim img{object-fit:contain;padding:6px}
-.vn{padding:10px 12px 0;font-size:17px;font-weight:700}.vd{padding:3px 12px 0;font-size:14px;color:var(--mut);line-height:1.6;white-space:pre-line}
-.vh{padding:2px 12px 8px;font-size:13px;color:var(--mut)}
+
+
+.vn{padding:2px 10px 0;font-size:14px;font-weight:700;color:#9a7b00}.vd{padding:2px 10px 0;font-size:12.5px;color:var(--mut);line-height:1.5;white-space:pre-line}
+.vw{position:relative}.vov{position:absolute;top:0;left:0;right:0;aspect-ratio:1;display:flex;align-items:flex-end;padding:6px;pointer-events:none}
 .dots{display:flex;justify-content:center;gap:6px;padding:2px 0 12px}.dots i{width:7px;height:7px;border-radius:4px;background:#d6d6d0;transition:width .2s}.dots i.on{background:var(--ink);width:20px}
 .gbadge{position:absolute;bottom:6px;left:6px;background:rgba(0,0,0,.65);color:#fff;font-size:12px;padding:2px 8px;border-radius:10px;pointer-events:none}
 #lbp,#lbq{position:absolute;top:50%;margin-top:-22px;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.2);color:#fff;font-size:28px;line-height:1;z-index:2;display:none}
@@ -77,8 +78,8 @@ function draw(){
   document.querySelectorAll('.vs').forEach(function(e){e.scrollLeft=sc[e.dataset.id]||0;vdot(e)});
   bar();
 }
-function vdot(el){var i=Math.round(Math.abs(el.scrollLeft)/(el.clientWidth||1)),d=el.parentNode.querySelectorAll('.dots i'),c=el.parentNode.querySelector('.vcn');for(var j=0;j<d.length;j++)d[j].className=j===i?'on':'';if(c)c.textContent=i+1}
-function vcard(x){var n=x.variants.length;return '<div class="card" style="grid-column:1/-1"><div class="nm" style="padding:12px 12px 0;font-size:18px;flex:none">'+x.name+'</div><div class="vh">اسحب يمين أو شمال لتشوف الأشكال • الشكل <span class="vcn">1</span> من '+n+'</div><div class="vs" data-id="'+x.id+'" onscroll="vdot(this)">'+x.variants.map(function(v){return '<div class="vsl"><div class="im vim">'+(v.img&&IMGS[v.id]?'<img src="'+IMGS[v.id]+'" alt="" onclick="zoomImg(this.src)">':v.n.charAt(0))+'</div><div class="vn">'+v.n+'</div>'+(v.d?'<div class="vd">'+esc(v.d)+'</div>':'')+'<div class="pr" style="padding-top:6px"><b>'+fmt(v.p||x.price)+'</b> ج.م</div>'+ctl(x.id+'@'+v.id)+'</div>'}).join('')+'</div><div class="dots">'+x.variants.map(function(v,j){return '<i class="'+(j?'':'on')+'"></i>'}).join('')+'</div></div>'}
+function vdot(el){var cd=el.closest('.card'),i=Math.round(Math.abs(el.scrollLeft)/(el.clientWidth||1)),d=cd.querySelectorAll('.dots i'),c=cd.querySelector('.vcn');for(var j=0;j<d.length;j++)d[j].className=j===i?'on':'';if(c)c.textContent=i+1}
+function vcard(x){var n=x.variants.length;return '<div class="card"><div class="vw"><div class="vs" data-id="'+x.id+'" onscroll="vdot(this)">'+x.variants.map(function(v){return '<div class="vsl"><div class="im">'+(v.img&&IMGS[v.id]?'<img src="'+IMGS[v.id]+'" alt="" onclick="zoomImg(this.src)">':v.n.charAt(0))+'</div><div class="nm" style="flex:none">'+x.name+'</div><div class="vn">'+v.n+'</div>'+(v.d?'<div class="vd">'+esc(v.d)+'</div>':'')+'<div style="flex:1"></div><div class="pr" style="padding-top:6px"><b>'+fmt(v.p||x.price)+'</b> ج.م</div>'+ctl(x.id+'@'+v.id)+'</div>'}).join('')+'</div><div class="vov"><span class="gbadge" style="position:static">اسحب وشوف الأشكال • <span class="vcn">1</span>/'+n+'</span></div></div><div class="dots">'+x.variants.map(function(v,j){return '<i class="'+(j?'':'on')+'"></i>'}).join('')+'</div></div>'}
 function pid(k){return k.split(/[~@]/)[0]}
 function isV(k){return k.indexOf('@')>0}
 function vOf(k){var id=k.split('@')[1];return (P[pid(k)].variants||[]).filter(function(v){return v.id==id})[0]}
