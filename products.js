@@ -987,23 +987,29 @@ const CATALOG={
     },
     {
      "id": "nmus61kro",
-     "name": "اكسجين بلوب 20%",
+     "name": "اكسجين بلوب ",
      "price": 60,
+     "img": 1,
      "variants": [
       {
-       "id": "vmus63dc0",
+       "id": "vmus6fmg3",
+       "n": "اكسجين بلوب 20%",
+       "img": 1,
+       "p": 60
+      },
+      {
+       "id": "vmus6fu0v",
        "n": "اكسجين بلوب 30%",
        "img": 1,
        "p": 60
       },
       {
-       "id": "vmus64ehz",
+       "id": "vmus6fvjc",
        "n": "اكسجين بلوب 40%",
-       "p": 60,
-       "img": 1
+       "img": 1,
+       "p": 60
       }
-     ],
-     "img": 1
+     ]
     }
    ]
   },
