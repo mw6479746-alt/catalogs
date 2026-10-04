@@ -465,6 +465,12 @@ const CATALOG={
      "name": "سترونج بلص",
      "price": 1200,
      "img": 1
+    },
+    {
+     "id": "nmut3dqrk",
+     "name": "بيور كولاجين ",
+     "price": 280,
+     "img": 1
     }
    ]
   },
@@ -511,6 +517,12 @@ const CATALOG={
      "id": "p47",
      "name": "فوك سمارت",
      "price": 3500,
+     "img": 1
+    },
+    {
+     "id": "nmut37lxn",
+     "name": "ليزا ثلاثيه ",
+     "price": 3200,
      "img": 1
     }
    ]
@@ -783,7 +795,10 @@ const CATALOG={
      "id": "nmur6s6aj",
      "name": "كرسي مستورد ",
      "price": 7000,
-     "img": 1
+     "img": 1,
+     "gal": [
+      "gmut2w2vocf4i"
+     ]
     },
     {
      "id": "nmurik3yq",
@@ -1022,6 +1037,12 @@ const CATALOG={
        "p": 60
       }
      ]
+    },
+    {
+     "id": "nmut2teky",
+     "name": "صبغة حواجب بايجن ",
+     "price": 100,
+     "img": 1
     }
    ]
   },
@@ -1163,10 +1184,10 @@ const CATALOG={
      "price": 200,
      "img": 1,
      "gal": [
-      "gmusoe3rhr5lw",
-      "gmusoe3stwlr9",
-      "gmusoe3uej60b",
-      "gmusoe3vwudtk"
+      "gmut2hsewxbpu",
+      "gmut2i2nyjbg8",
+      "gmut2ie6gksoi",
+      "gmut2imx4fv9l"
      ]
     }
    ]
