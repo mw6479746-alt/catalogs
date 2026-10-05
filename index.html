@@ -46,6 +46,9 @@ h2{font-size:17px;margin:18px 14px 10px}
 .gb{background:#fff;color:var(--ink);border:2px solid var(--ink);margin-top:-4px}.clr{background:none;border:0;color:var(--mut);margin-top:10px;width:100%;font-size:14px}.emp{text-align:center;color:var(--mut);padding:40px 0}
 .im img{opacity:0;transition:opacity .35s}.im img.ld{opacity:1}.im:has(img:not(.ld):not(.tb)){background:linear-gradient(90deg,#efefea 25%,#fafaf8 50%,#efefea 75%);background-size:200% 100%;animation:shm 1.2s linear infinite}@keyframes shm{to{background-position:-200% 0}}
 .im img.tb{opacity:1;filter:blur(8px);transform:scale(1.2);transition:none}
+.dt{margin:0 10px 10px;padding:7px;border:0;background:none;color:#9a7b00;font-weight:700;font-size:13px;text-align:center}
+.nb{margin:12px 14px 0;padding:12px 14px;border-radius:12px;background:var(--gold);color:var(--ink);font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;animation:nbp 1.6s ease-in-out infinite}.nb i{font-style:normal;padding:2px 10px;font-size:18px}@keyframes nbp{50%{box-shadow:0 0 0 5px rgba(245,196,0,.35)}}
+@keyframes slin{from{transform:translateX(var(--dx,0));opacity:.4}to{transform:none;opacity:1}}
 </style></head><body>
 <header><div class="br"><b id="bn">PROTEIN &amp; COSMETICS</b><span>أسعار الجملة</span></div>
 <input id="q" type="search" placeholder="ابحث عن منتج..." oninput="term=this.value;draw()"><div id="ch"></div><div id="imbar"></div></header>
@@ -66,7 +69,17 @@ var IMGS={};
 function IM(k){return 'img-'+k+'.jpg'}
 function TB(k){return typeof IMGT!=='undefined'&&IMGT[k]?'<img class="tb" alt="" src="'+IMGT[k]+'">':''}
 window.addEventListener('load',function(){var l=[];try{CATALOG.sections.forEach(function(s){s.items.forEach(function(x){if(x.img)l.push(IM(x.id));(x.gal||[]).forEach(function(g){l.push(IM(g))});(x.variants||[]).forEach(function(v){if(v.img)l.push(IM(v.id))})})})}catch(e){}var i=0;function nx(){if(i>=l.length)return;var m=new Image();m.onload=m.onerror=nx;m.src=l[i++]}for(var j=0;j<3;j++)nx()});
-var cart={},cat='all',term='',P={},fmt=function(n){return n.toLocaleString('en-US')};
+var cart={},cat='all',term='',P={},fmt=function(n){return n.toLocaleString('en-US')},sdir=0,nbHide=false,NEW=[];
+function lsGet(){try{return parseInt(localStorage.getItem('lastSeen')||'0')||0}catch(e){return 0}}
+function lsSet(){try{localStorage.setItem('lastSeen',String(Date.now()))}catch(e){}}
+(function(){var ls=lsGet(),now=Date.now();if(!ls){lsSet();return}CATALOG.sections.forEach(function(s){s.items.forEach(function(x){if(x.added&&x.added>ls&&now-x.added<14*864e5)NEW.push(x)})});NEW.sort(function(a,b){return b.added-a.added})})();
+function showNew(){lsSet();nbHide=true;setCat('new');window.scrollTo(0,0)}
+function dismissNew(){lsSet();nbHide=true;draw()}
+function nbar(){return NEW.length&&!nbHide&&cat!=='new'?'<div class="nb" onclick="showNew()"><span>🆕 فيه '+NEW.length+(NEW.length>10?' منتج جديد':' '+(NEW.length==1?'منتج جديد':'منتجات جديدة'))+' اتضافت — اضغط تشوفها</span><i onclick="event.stopPropagation();dismissNew()">✕</i></div>':''}
+function swipeCat(d){var o=['all'];CATALOG.sections.forEach(function(_,i){o.push(i)});var c=o.indexOf(cat);if(c<0)return;var n=c+d;if(n<0||n>=o.length)return;sdir=d;setCat(o[n]);window.scrollTo(0,0)}
+(function(){var mm=document.getElementById('m'),sx=0,sy=0,ok=false;
+mm.addEventListener('touchstart',function(e){if(e.touches.length!==1||e.target.closest('.vs,input,textarea')){ok=false;return}ok=true;sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+mm.addEventListener('touchend',function(e){if(!ok)return;ok=false;var t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;if(Math.abs(dx)<70||Math.abs(dx)<Math.abs(dy)*1.6)return;swipeCat(dx<0?1:-1)},{passive:true})})();
 try{cart=JSON.parse(localStorage.getItem('cart')||'{}')}catch(e){}
 CATALOG.sections.forEach(function(s){s.items.forEach(function(i){P[i.id]=i})});
 document.getElementById('bn').textContent=CATALOG.brand;document.title=CATALOG.brand;
@@ -77,21 +90,25 @@ function ctl(id){var q=cart[id]||0;return q?'<div class="qty"><button onclick="c
 function draw(){
   var sc={};document.querySelectorAll('.vs').forEach(function(e){sc[e.dataset.id]=e.scrollLeft});
   var h='<button class="chip'+(cat=='all'?' on':'')+'" onclick="setCat(\'all\')">الكل</button>';
+  if(NEW.length)h+='<button class="chip'+(cat==='new'?' on':'')+'" onclick="setCat(\'new\')">🆕 جديد</button>';
   CATALOG.sections.forEach(function(s,i){h+='<button class="chip'+(cat===i?' on':'')+'" onclick="setCat('+i+')">'+s.name+'</button>'});
   document.getElementById('ch').innerHTML=h;
   var t=norm(term.trim()),o='';
-  CATALOG.sections.forEach(function(s,i){
-    if(cat!='all'&&cat!==i)return;
+  (cat==='new'?[{name:'🆕 منتجات جديدة',items:NEW}]:CATALOG.sections).forEach(function(s,i){
+    if(cat!='all'&&cat!=='new'&&cat!==i)return;
     var it=s.items.filter(function(x){return !t||norm(x.name).indexOf(t)>-1});if(!it.length)return;
     o+='<h2>'+s.name+'</h2><div class="grid">'+it.map(function(x){
       if(x.variants&&x.variants.length)return vcard(x);
-      return '<div class="card"><div class="im">'+(x.img&&IM(x.id)?TB(x.id)+'<img decoding="async" onload="this.classList.add(\'ld\')" onerror="this.style.display=\'none\';this.classList.add(\'ld\')" src="'+IM(x.id)+'" alt="" onclick="zoomItem(\''+x.id+'\')">':(x.variants&&x.variants[0]&&x.variants[0].img&&IM(x.variants[0].id))?'<img decoding="async" onload="this.classList.add(\'ld\')" onerror="this.style.display=\'none\';this.classList.add(\'ld\')" src="'+IM(x.variants[0].id)+'" alt="" onclick="zoomImg(this.src)">':x.name.charAt(0))+(x.gal&&x.gal.length&&x.img?'<span class="gbadge">📷 '+(x.gal.length+1)+'</span>':'')+'</div><div class="nm">'+x.name+'</div><div class="pr">'+(x.variants&&vmin(x)<x.price?'من ':'')+'<b>'+fmt(x.variants?vmin(x):x.price)+'</b> ج.م'+(x.gram?' / لتر':x.parts?' / المجموعة':'')+'</div>'+(x.variants?vbtn(x):ctl(x.id))+(x.gram?gbtn(x):'')+(x.parts?pbtn(x):'')+'</div>'}).join('')+'</div>'});
-  document.getElementById('m').innerHTML=o||'<div class="emp">مفيش نتائج</div>';
+      return '<div class="card"><div class="im">'+(x.img&&IM(x.id)?TB(x.id)+'<img decoding="async" onload="this.classList.add(\'ld\')" onerror="this.style.display=\'none\';this.classList.add(\'ld\')" src="'+IM(x.id)+'" alt="" onclick="zoomItem(\''+x.id+'\')">':(x.variants&&x.variants[0]&&x.variants[0].img&&IM(x.variants[0].id))?'<img decoding="async" onload="this.classList.add(\'ld\')" onerror="this.style.display=\'none\';this.classList.add(\'ld\')" src="'+IM(x.variants[0].id)+'" alt="" onclick="zoomImg(this.src)">':x.name.charAt(0))+(x.gal&&x.gal.length&&x.img?'<span class="gbadge">📷 '+(x.gal.length+1)+'</span>':'')+'</div><div class="nm">'+x.name+'</div><div class="pr">'+(x.variants&&vmin(x)<x.price?'من ':'')+'<b>'+fmt(x.variants?vmin(x):x.price)+'</b> ج.م'+(x.gram?' / لتر':x.parts?' / المجموعة':'')+'</div>'+(x.variants?vbtn(x):ctl(x.id))+(x.gram?gbtn(x):'')+(x.parts?pbtn(x):'')+dbtn(x)+'</div>'}).join('')+'</div>'});
+  document.getElementById('m').innerHTML=nbar()+(o||'<div class="emp">مفيش نتائج</div>');
+  if(sdir){var mm=document.getElementById('m');mm.style.setProperty('--dx',(sdir>0?-40:40)+'px');mm.style.animation='none';void mm.offsetWidth;mm.style.animation='slin .25s ease-out';var on=document.querySelector('#ch .chip.on');if(on&&on.scrollIntoView)on.scrollIntoView({inline:'center',block:'nearest'});sdir=0}
   document.querySelectorAll('.vs').forEach(function(e){e.scrollLeft=sc[e.dataset.id]||0;vdot(e)});
   bar();
 }
 function vdot(el){var cd=el.closest('.card'),i=Math.round(Math.abs(el.scrollLeft)/(el.clientWidth||1)),d=cd.querySelectorAll('.dots i'),c=cd.querySelector('.vcn');for(var j=0;j<d.length;j++)d[j].className=j===i?'on':'';if(c)c.textContent=i+1}
-function vcard(x){var n=x.variants.length;return '<div class="card"><div class="vw"><div class="vs" data-id="'+x.id+'" onscroll="vdot(this)">'+x.variants.map(function(v){return '<div class="vsl"><div class="im">'+(v.img&&IM(v.id)?TB(v.id)+'<img decoding="async" onload="this.classList.add(\'ld\')" onerror="this.style.display=\'none\';this.classList.add(\'ld\')" src="'+IM(v.id)+'" alt="" onclick="zoomImg(this.src)">':v.n.charAt(0))+'</div><div class="nm" style="flex:none">'+x.name+'</div><div class="vn">'+v.n+'</div>'+(v.d?'<div class="vd">'+esc(v.d)+'</div>':'')+'<div style="flex:1"></div><div class="pr" style="padding-top:6px"><b>'+fmt(v.p||x.price)+'</b> ج.م</div>'+ctl(x.id+'@'+v.id)+'</div>'}).join('')+'</div><div class="vov"><span class="gbadge" style="position:static">اسحب وشوف الأشكال • <span class="vcn">1</span>/'+n+'</span></div></div><div class="dots">'+x.variants.map(function(v,j){return '<i class="'+(j?'':'on')+'"></i>'}).join('')+'</div></div>'}
+function vcard(x){var n=x.variants.length;return '<div class="card"><div class="vw"><div class="vs" data-id="'+x.id+'" onscroll="vdot(this)">'+x.variants.map(function(v){return '<div class="vsl"><div class="im">'+(v.img&&IM(v.id)?TB(v.id)+'<img decoding="async" onload="this.classList.add(\'ld\')" onerror="this.style.display=\'none\';this.classList.add(\'ld\')" src="'+IM(v.id)+'" alt="" onclick="zoomImg(this.src)">':v.n.charAt(0))+'</div><div class="nm" style="flex:none">'+x.name+'</div><div class="vn">'+v.n+'</div>'+(v.d?'<div class="vd">'+esc(v.d)+'</div>':'')+'<div style="flex:1"></div><div class="pr" style="padding-top:6px"><b>'+fmt(v.p||x.price)+'</b> ج.م</div>'+ctl(x.id+'@'+v.id)+'</div>'}).join('')+'</div><div class="vov"><span class="gbadge" style="position:static">اسحب وشوف الأشكال • <span class="vcn">1</span>/'+n+'</span></div></div><div class="dots">'+x.variants.map(function(v,j){return '<i class="'+(j?'':'on')+'"></i>'}).join('')+'</div>'+dbtn(x)+'</div>'}
+function dbtn(x){return x.desc?'<button class="dt" onclick="descUI(\''+x.id+'\')">التفاصيل</button>':''}
+function descUI(id){var p=P[id];if(!p||!p.desc)return;pv=null;document.getElementById('sh').style.display='flex';document.getElementById('pn').innerHTML='<h2 style="margin:0 0 10px">'+esc(p.name)+'</h2>'+(p.img&&IM(id)?'<img src="'+IM(id)+'" alt="" onclick="zoomImg(this.src)" onerror="this.style.display=\'none\'" style="width:100%;max-height:38vh;object-fit:contain;border-radius:12px;background:#fafaf8;margin-bottom:12px">':'')+'<div style="white-space:pre-line;line-height:1.8;font-size:15px">'+esc(p.desc)+'</div><button class="send" style="background:#111;color:#f5c400" onclick="closeSh()">تم</button>'}
 function pid(k){return k.split(/[~@]/)[0]}
 function isV(k){return k.indexOf('@')>0}
 function vOf(k){var id=k.split('@')[1];return (P[pid(k)].variants||[]).filter(function(v){return v.id==id})[0]}
