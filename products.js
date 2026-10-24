@@ -1462,5 +1462,6 @@ const CATALOG={
    ]
   }
  ],
- "minGrams": 50
+ "minGrams": 50,
+ "notice": "جاهزين لعروض البروتين الأسبوع ده!!🤔"
 };
