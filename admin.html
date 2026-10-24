@@ -26,6 +26,8 @@ textarea{border:1px solid var(--line);border-radius:10px;padding:10px;font-size:
 <div class="box"><div style="font-size:13px;color:#6b6b66;margin-bottom:6px">اسم الكتالوج (بيظهر فوق وفي رسالة الطلب)</div><input id="br"></div>
 <div class="box"><div style="font-size:13px;color:#6b6b66;margin-bottom:6px">رقم الواتساب لاستقبال الطلبات (بالكود الدولي من غير +، مثال: 201012345678)</div><input id="wI" inputmode="numeric" placeholder="201012345678"></div>
 <div class="box"><div style="font-size:13px;color:#6b6b66;margin-bottom:6px">رابط صفحة الفيسبوك (اختياري، بيظهر في آخر الكتالوج)</div><input id="fI" inputmode="url" placeholder="https://www.facebook.com/..." dir="ltr"></div>
+<div class="box"><div style="font-size:13px;color:#6b6b66;margin-bottom:6px">شريط إعلان أصفر فوق الكتالوج (اختياري)، مثال: عروض الأسبوع على بروتين الشعر</div><input id="ntI" placeholder="سيبه فاضي لو مش عايز شريط"></div>
+<div class="box" id="rvBox"></div>
 <div class="box" id="ghBox"></div>
 <div class="box"><div class="top"><input id="ns" placeholder="اسم قسم جديد"><button class="g" data-a="addsec">+ قسم</button></div></div>
 <div class="box"><div style="font-size:13px;color:#6b6b66;margin-bottom:6px">نقل الصور القديمة لملفات (مرة واحدة بس)</div><button class="g" style="width:100%" onclick="migrate()">حمّل الصور القديمة</button><div id="mr" style="font-size:13px;color:#6b6b66;margin-top:6px;line-height:1.7"></div></div>
@@ -51,7 +53,7 @@ function render(){
     '<button class="l" style="width:100%;margin-top:8px" data-a="add" data-s="'+a+'">+ منتج جديد في '+esc(s.name)+'</button></div>'}).join('');
   st();
 }
-function pic(file,cb){var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var k=Math.min(1,1200/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);var tc=document.createElement('canvas'),tk=Math.min(1,28/Math.max(im.width,im.height));tc.width=Math.max(1,Math.round(im.width*tk));tc.height=Math.max(1,Math.round(im.height*tk));tc.getContext('2d').drawImage(im,0,0,tc.width,tc.height);cb(c.toDataURL('image/jpeg',.85),tc.toDataURL('image/jpeg',.45))};im.src=r.result};r.readAsDataURL(file)}
+function pic(file,cb,mx){var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var k=Math.min(1,(mx||1200)/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);var tc=document.createElement('canvas'),tk=Math.min(1,28/Math.max(im.width,im.height));tc.width=Math.max(1,Math.round(im.width*tk));tc.height=Math.max(1,Math.round(im.height*tk));tc.getContext('2d').drawImage(im,0,0,tc.width,tc.height);cb(c.toDataURL('image/jpeg',.85),tc.toDataURL('image/jpeg',.45))};im.src=r.result};r.readAsDataURL(file)}
 var m=document.getElementById('m');
 m.addEventListener('input',function(e){var t=e.target,k=t.dataset.k,s=S.sections[t.dataset.s];if(!k||k=='img')return;
   if(k=='sn')s.name=t.value;else{var x=s.items[t.dataset.i];if(k=='n')x.name=t.value;else if(k=='ds'){if(t.value.trim())x.desc=t.value;else delete x.desc}else if(k=='vn'){x.variants[t.dataset.j].n=t.value}else if(k=='vd'){var vq=x.variants[t.dataset.j];if(t.value.trim())vq.d=t.value;else delete vq.d}else if(k=='vg'){var wg=parseFloat(t.value);if(wg>0)x.variants[t.dataset.j].g=wg;else delete x.variants[t.dataset.j].g}else if(k=='vp'){var w=parseFloat(t.value);if(w>0)x.variants[t.dataset.j].p=w;else delete x.variants[t.dataset.j].p}else if(k=='pt'){x.parts[t.dataset.j].p=parseFloat(t.value)||0}else if(k=='pn'){x.parts[t.dataset.j].n=t.value}else if(k=='g'){var v=parseFloat(t.value);if(v>0)x.gram=v;else delete x.gram}else x.price=parseInt(t.value)||0}dirty=true;st()});
@@ -84,7 +86,7 @@ var bI=document.getElementById('bI');bI.value=S.brand||'';bI.oninput=function(){
 document.getElementById("br").value=S.brand||"";document.getElementById("br").oninput=function(){S.brand=this.value;dirty=true;st()};
 var DL={},ORIG={p1:1,p2:1,p3:1,p4:1,p5:1,p6:1,p7:1,p8:1,p9:1,p10:1,p11:1,p12:1,p13:1,p14:1,p15:1,p16:1,p17:1,p18:1,p19:1,p20:1,p21:1,p22:1,p23:1,p24:1,p25:1,p26:1,p27:1,p28:1,p29:1,p30:1,p31:1,p32:1,p33:1,p34:1,p35:1,p36:1,p37:1,p38:1,p39:1,p40:1,p41:1,p42:1,p43:1,p44:1,p45:1,p46:1,p47:1,p53:1,p54:1,p55:1,p56:1,p57:1,p58:1};
 function SRC(id){return I[id]||('img-'+id+'.jpg')}
-function used(){var u={};S.sections.forEach(function(s){s.items.forEach(function(x){if(x.img)u[x.id]=1;(x.gal||[]).forEach(function(g){u[g]=1});(x.variants||[]).forEach(function(v){if(v.img)u[v.id]=1})})});return u}
+function used(){var u={};S.sections.forEach(function(s){s.items.forEach(function(x){if(x.img)u[x.id]=1;(x.gal||[]).forEach(function(g){u[g]=1});(x.variants||[]).forEach(function(v){if(v.img)u[v.id]=1})})});(S.reviews||[]).forEach(function(r){if(r.img&&r.id)u[r.id]=1});return u}
 function pend(){var u=used();return Object.keys(I).filter(function(k){return u[k]&&!DL[k]})}
 var _st=st;st=function(){_st();var ic=document.getElementById('ic');if(ic)ic.textContent='('+pend().length+')'};
 function dlT(){var u=used(),m={};Object.keys(T).forEach(function(k){if(u[k])m[k]=T[k]});var b=new Blob(['var IMGT='+JSON.stringify(m)+';\n'],{type:'text/javascript'}),l=document.createElement('a');l.href=URL.createObjectURL(b);l.download='thumbs.js';document.body.appendChild(l);l.click();l.remove()}
@@ -135,5 +137,19 @@ function publish(){
 var fI=document.getElementById('fI');fI.value=S.facebook||'';fI.oninput=function(){var v=this.value.trim();if(v)S.facebook=v;else delete S.facebook;dirty=true;st()};
 var wI=document.getElementById('wI');wI.value=S.whatsapp||'';wI.oninput=function(){var v=this.value.replace(/\D/g,'');if(v!==this.value)this.value=v;S.whatsapp=v;dirty=true;st()};
 ghUI();
+function rvDraw(){var r=S.reviews||[],b=document.getElementById('rvBox');
+  b.innerHTML='<div style="font-size:14px;font-weight:700">آراء العملاء (بتظهر في آخر الكتالوج)</div><div style="font-size:12.5px;color:#6b6b66;margin:4px 0 8px;line-height:1.6">تقدر تكتب رأي نصي أو ترفع سكرين من رسالة العميل (أو الاتنين). استخدم آراء حقيقية وبإذن أصحابها، وغطّي أرقام وأسماء العملاء الشخصية في السكرين.</div>'+
+  r.map(function(x,i){return '<div style="border-top:1px solid var(--line);padding-top:8px;margin-top:8px"><div class="pr" style="gap:6px;align-items:flex-start"><div class="th" style="width:64px;height:64px">'+(x.img&&x.id?'<img src="'+SRC(x.id)+'">':'📷 سكرين')+'<input type="file" accept="image/*" data-rvf="1" data-i="'+i+'"></div><div class="f" style="flex:1"><input data-rv="n" data-i="'+i+'" placeholder="اسم العميل أو الصالون (اختياري)" value="'+esc(x.n)+'" style="width:100%"><input data-rv="s" data-i="'+i+'" type="number" min="1" max="5" inputmode="numeric" placeholder="نجوم من 1 لـ 5 (اختياري)" value="'+(x.s||'')+'" style="width:100%"></div><button class="r" data-r="del" data-i="'+i+'" style="padding:8px 10px">×</button></div><textarea data-rv="t" data-i="'+i+'" rows="2" placeholder="نص الرأي (اختياري لو رفعت سكرين)" style="margin-top:6px">'+esc(x.t)+'</textarea></div>'}).join('')+
+  '<button class="l" data-r="add" style="margin-top:10px;width:100%">+ رأي جديد</button>'}
+document.getElementById('rvBox').addEventListener('input',function(e){var t=e.target,k=t.dataset.rv;if(!k)return;var x=S.reviews[+t.dataset.i];if(!x)return;
+  if(k=='s'){var v=parseInt(t.value);if(v>=1)x.s=Math.min(5,v);else delete x.s}else x[k]=t.value;dirty=true;st()});
+document.getElementById('rvBox').addEventListener('change',function(e){var t=e.target;if(!t.dataset.rvf||!t.files[0])return;var x=S.reviews[+t.dataset.i];
+  pic(t.files[0],function(d,tt){x.id=x.id||('r'+Date.now().toString(36)+Math.random().toString(36).slice(2,5));I[x.id]=d;T[x.id]=tt;x.img=1;dirty=true;rvDraw();st()},1600)});
+document.getElementById('rvBox').addEventListener('click',function(e){var t=e.target.closest('button');if(!t||!t.dataset.r)return;
+  if(t.dataset.r=='add'){(S.reviews=S.reviews||[]).push({n:'',t:''})}
+  else{if(!confirm('تمسح الرأي ده؟'))return;S.reviews.splice(+t.dataset.i,1);if(!S.reviews.length)delete S.reviews}
+  dirty=true;rvDraw();st()});
+var ntI=document.getElementById('ntI');ntI.value=S.notice||'';ntI.oninput=function(){var v=this.value.trim();if(v)S.notice=v;else delete S.notice;dirty=true;st()};
+rvDraw();
 render();
 </script></body></html>
